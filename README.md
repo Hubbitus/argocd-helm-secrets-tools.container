@@ -5,7 +5,7 @@ Helm plugin (sops backend), [sops](https://github.com/getsops/sops), and
 [age](https://github.com/FiloSottile/age) for the ArgoCD repo-server
 `helm-secrets` plugin init-container.
 
-Published to: `docker.io/hubbitus/argocd-helm-secrets-tools`
+Published to: [`docker.io/hubbitus/argocd-helm-secrets-tools`](https://hub.docker.com/r/hubbitus/argocd-helm-secrets-tools)
 
 ## Versions
 
