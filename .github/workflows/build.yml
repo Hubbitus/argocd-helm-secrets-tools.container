@@ -31,7 +31,7 @@ jobs:
           cat gpg.out
           grep -q "Good signature" gpg.out
           grep -q "1F34F95B4F30BC5B06E0D7CC3F619F17002790D8" gpg.out
-          expected=$(awk '/secrets-4.7.8.tgz: sha256:/ {print $NF}' secrets-4.7.8.tgz.prov)
+          expected=$(awk '/secrets-4.7.8.tgz: sha256:/ {sub(/.*sha256:/, ""); print}' secrets-4.7.8.tgz.prov)
           actual=$(sha256sum secrets-4.7.8.tgz | awk '{print $1}')
           echo "expected: ${expected}"
           echo "actual:   ${actual}"
