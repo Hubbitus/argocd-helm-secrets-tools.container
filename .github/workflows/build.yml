@@ -111,6 +111,15 @@ jobs:
             cosign sign --yes "${tag}@${DIGEST}"
           done
 
+      - name: Update Docker Hub description
+        if: github.event_name != 'pull_request'
+        uses: peter-evans/dockerhub-description@v5.0.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: hubbitus/argocd-helm-secrets-tools
+          readme-filepath: ./README.md
+
   smoke:
     runs-on: ubuntu-24.04
     needs: []
