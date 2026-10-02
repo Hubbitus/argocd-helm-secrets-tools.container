@@ -1,0 +1,6 @@
+.tmp/
+*.tar.gz
+*.tgz
+*.prov
+checksums.txt
+*.sigstore.json
