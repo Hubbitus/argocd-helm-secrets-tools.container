@@ -28,13 +28,10 @@ jobs:
           # The clearsigned .prov contains YAML lines starting with dashes;
           # gpg exits non-zero while still reporting the signature status.
           gpg --verify secrets-4.7.8.tgz.prov > gpg.out 2>&1 || true
-          cat gpg.out
           grep -q "Good signature" gpg.out
           grep -q "1F34F95B4F30BC5B06E0D7CC3F619F17002790D8" gpg.out
           expected=$(awk '/secrets-4.7.8.tgz: sha256:/ {sub(/.*sha256:/, ""); print}' secrets-4.7.8.tgz.prov)
           actual=$(sha256sum secrets-4.7.8.tgz | awk '{print $1}')
-          echo "expected: ${expected}"
-          echo "actual:   ${actual}"
           [ "${expected}" = "${actual}" ]
 
       - name: Install cosign
