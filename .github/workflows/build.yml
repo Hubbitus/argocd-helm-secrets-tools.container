@@ -25,7 +25,11 @@ jobs:
           curl -fsSL -o secrets-4.7.8.tgz.prov \
             https://github.com/jkroepke/helm-secrets/releases/download/v4.7.8/secrets-4.7.8.tgz.prov
           gpg --batch --import keys/jkroepke.asc
-          gpg --verify secrets-4.7.8.tgz.prov
+          # The clearsigned .prov contains YAML lines starting with dashes;
+          # gpg exits non-zero while still reporting the signature status.
+          gpg --verify secrets-4.7.8.tgz.prov > gpg.out 2>&1 || true
+          grep -q "Good signature from \"Jan-Otto Kröpke" gpg.out
+          grep -q "Primary key fingerprint: 1F34 F95B 4F30 BC5B 06E0  D7CC 3F61 9F17 0027 90D8" gpg.out
           expected=$(awk '/secrets-4.7.8.tgz: sha256:/ {print $NF}' secrets-4.7.8.tgz.prov)
           actual=$(sha256sum secrets-4.7.8.tgz | awk '{print $1}')
           echo "helm-secrets chart sha256: ${actual}"
